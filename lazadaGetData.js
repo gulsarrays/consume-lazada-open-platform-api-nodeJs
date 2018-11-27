@@ -1,40 +1,50 @@
+const crypto = require('crypto');
 const Request = require('request');
-const config = require('config');
-const lazada = require('./lazadaGetUrlGenerator');
 
-const appKey = config.get('appKey');
-const accessToken = config.get('accessToken');
-const appSecret = config.get('appSecret');
+function getRequestUrl(params) {
+  const arrKey = [];
+  for (let key in params.commonParamsObj) {
+    if (key === 'sign') {
+      continue;
+    }
+    arrKey.push(key);
+  }
+  for (let key in params.requestParamsObj) {
+    arrKey.push(key);
+  }
 
-const apiPath = '/order/get';
-const endPoint = 'https://api.lazada.co.th/rest';
+  const sorted = arrKey.sort(function(a, b) {
+    if (a > b) return 1;
+    else if (a < b) return -1;
+    else return 0;
+  });
 
-const commonParamsObj = {};
-commonParamsObj.app_key = appKey;
-commonParamsObj.access_token = accessToken;
-commonParamsObj.timestamp = Date.now();
-commonParamsObj.sign_method = 'sha256';
-commonParamsObj.sign = '';
+  let strParams = params.apiPath;
+  let requestUrl = '';
 
-const requestParamsObj = {};
-requestParamsObj.order_id = '[your order id OR demo order id]';
+  for (let value of sorted) {
+    let paramsValue = '';
+    if (typeof params.requestParamsObj[value] === 'undefined') {
+      paramsValue = params.commonParamsObj[value];
+    } else {
+      paramsValue = params.requestParamsObj[value];
+    }
+    strParams = strParams + value + paramsValue;
+    requestUrl = requestUrl + '&' + value + '=' + paramsValue;
+  }
 
-const lazadaUrl = lazada.getRequestUrl(
-  commonParamsObj,
-  requestParamsObj,
-  appSecret,
-  apiPath,
-  endPoint
-);
+  signature = crypto
+    .createHmac(params.commonParamsObj['sign_method'], params.appSecret)
+    .update(strParams)
+    .digest('hex')
+    .toUpperCase();
 
-function processResult(result) {
-  console.log('processResult - result', result, '\n\n');
+  requestUrl =
+    params.endPoint + params.apiPath + '?sign=' + signature + requestUrl;
+  return requestUrl;
 }
-function errorHandler(error) {
-  console.log('processError - error', error, '\n\n');
-}
 
-async function fetchTheData(requestUrl) {
+async function fetchLazadaData(requestUrl) {
   return await new Promise(function(resolve, reject) {
     Request.get(requestUrl, (error, response, body) => {
       if (error) {
@@ -45,10 +55,11 @@ async function fetchTheData(requestUrl) {
   });
 }
 
-async function getLazadaData(requestUrl) {
-  const result = await fetchTheData(requestUrl);
-  processResult(result);
-  // return result;
+async function getLazadaData(params) {
+  const requestUrl = await getRequestUrl(params);
+  const result = await fetchLazadaData(requestUrl);
+  return result;
 }
 
-getLazadaData(lazadaUrl);
+module.exports.getRequestUrl = getRequestUrl;
+module.exports.getLazadaData = getLazadaData;
