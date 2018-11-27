@@ -1,0 +1,22 @@
+{
+  "name": "consume-lazada-open-platform-api",
+  "version": "1.0.0",
+  "description": "Consume Lazada Open Platform's API ( get data from lazada ) by generating needed url with valid signature",
+  "main": "lazadaGetData.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gulsarrays/consume-lazada-open-platform-api-nodeJs"
+  },
+  "keywords": [
+    "Lazada, Lazada Url generator, Lazada Signature generator, consume Lazada Open Platform API, Lazada Open Platform Signature generator, Consume Lazada Api NodeJS "
+  ],
+  "author": "Gulmohar",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.0.0",
+    "request": "^2.88.0"
+  }
+}
