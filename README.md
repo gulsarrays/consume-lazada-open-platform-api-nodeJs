@@ -1,10 +1,8 @@
 # consume-lazada-open-platform-api-nodeJs
 
-Consume Lazada Open Platform's API by proper signature generation - NodeJS Implementation
+Consume Lazada Open Platform's GET method API's ( get data from lazada ) by generating needed url with valid signature.
 
-Consume Lazada Open Platform's API ( get data from lazada ) by generating needed url with valid signature.
-
-With this package we can call any Lazada Open Platform's Restful API for any Region by generating valid signature.
+With this package we can call any Lazada Open Platform's Restful GET method API for any Region by generating valid signature.
 
 Here you just need to populate two object's along with credentails as input as given in official document https://open.lazada.com/doc/api.htm
 
@@ -43,26 +41,22 @@ const requestParamsObj = {};
 requestParamsObj.order_id = '[your order ID OR demo order id]';
 ```
 
-```
-#### Please check the example.js file.
+**Please check the example.js file for reference**
 
+**_modification in example.js file_**
 
-##### modification in example.js file
-
-1) npm i consume-lazada-open-platform-get-api
-2) npm i config
-3) create a a file in a folder "config" as "default.json" and add the credentails as
-    {
-      "appKey": "[YOUR APP KEY]",
-      "accessToken": "[YOUR ACCESS TOKEN]",
-      "appSecret": "[YOUR SERVER SECRET KEY]"
-    }
-4) copy example.js file in your root folder
-5) update the apiPath/endPoint/order_id values corrospondingly as per your server configuration
-6) change following line
-      const lazada = require('./lazadaGetData');
+1. npm i consume-lazada-open-platform-get-api
+2. npm i config
+3. create a a file in a folder "config" as "default.json" and add the credentails as
+   {
+   "appKey": "[YOUR APP KEY]",
+   "accessToken": "[YOUR ACCESS TOKEN]",
+   "appSecret": "[YOUR SERVER SECRET KEY]"
+   }
+4. copy example.js file in your root folder
+5. update the apiPath/endPoint/order_id values corrospondingly as per your server configuration
+6. change following line
+   const lazada = require('./lazadaGetData');
    with
-      const lazada = require('consume-lazada-open-platform-get-api');
-7) run node example.js
-
-```
+   const lazada = require('consume-lazada-open-platform-get-api');
+7. run node example.js

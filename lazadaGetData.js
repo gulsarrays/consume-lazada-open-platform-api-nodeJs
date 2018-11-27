@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const Request = require('request');
 
-function getRequestUrl(params) {
+const getSortedArray = params => {
   const arrKey = [];
   for (let key in params.commonParamsObj) {
     if (key === 'sign') {
@@ -19,8 +19,14 @@ function getRequestUrl(params) {
     else return 0;
   });
 
+  return sorted;
+};
+
+const getRequestUrl = params => {
   let strParams = params.apiPath;
   let requestUrl = '';
+
+  const sorted = getSortedArray(params);
 
   for (let value of sorted) {
     let paramsValue = '';
@@ -42,9 +48,9 @@ function getRequestUrl(params) {
   requestUrl =
     params.endPoint + params.apiPath + '?sign=' + signature + requestUrl;
   return requestUrl;
-}
+};
 
-async function fetchLazadaData(requestUrl) {
+const fetchLazadaData = async requestUrl => {
   return await new Promise(function(resolve, reject) {
     Request.get(requestUrl, (error, response, body) => {
       if (error) {
@@ -53,13 +59,13 @@ async function fetchLazadaData(requestUrl) {
       resolve(JSON.parse(body));
     });
   });
-}
+};
 
-async function getLazadaData(params) {
+const getLazadaData = async params => {
   const requestUrl = await getRequestUrl(params);
   const result = await fetchLazadaData(requestUrl);
   return result;
-}
+};
 
 module.exports.getRequestUrl = getRequestUrl;
 module.exports.getLazadaData = getLazadaData;
