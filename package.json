@@ -1,5 +1,5 @@
 {
-  "name": "consume-lazada-open-platform-api",
+  "name": "consume-lazada-open-platform-get-api",
   "version": "1.0.0",
   "description": "Consume Lazada Open Platform's API ( get data from lazada ) by generating needed url with valid signature",
   "main": "lazadaGetData.js",

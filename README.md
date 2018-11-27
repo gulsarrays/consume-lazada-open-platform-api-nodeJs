@@ -42,3 +42,27 @@ commonParamsObj.sign = '';
 const requestParamsObj = {};
 requestParamsObj.order_id = '[your order ID OR demo order id]';
 ```
+
+```
+#### Please check the example.js file.
+
+
+##### modification in example.js file
+
+1) npm i consume-lazada-open-platform-get-api
+2) npm i config
+3) create a a file in a folder "config" as "default.json" and add the credentails as
+    {
+      "appKey": "[YOUR APP KEY]",
+      "accessToken": "[YOUR ACCESS TOKEN]",
+      "appSecret": "[YOUR SERVER SECRET KEY]"
+    }
+4) copy example.js file in your root folder
+5) update the apiPath/endPoint/order_id values corrospondingly as per your server configuration
+6) change following line
+      const lazada = require('./lazadaGetData');
+   with
+      const lazada = require('consume-lazada-open-platform-get-api');
+7) run node example.js
+
+```
